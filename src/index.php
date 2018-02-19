@@ -1,5 +1,9 @@
 <?php
 
-    phpinfo();
+    function main() {
+        echo "Hola mundo";
+    }
+
+    main();
 
 ?>

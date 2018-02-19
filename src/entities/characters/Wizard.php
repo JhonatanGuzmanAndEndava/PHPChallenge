@@ -1,5 +1,7 @@
 <?php
 
+include_once("Character.php");
+
     class Wizard extends Character {
 
         public function __construct($lifePoints = 100) {
@@ -13,9 +15,9 @@
 
         public function calculeDamage() {
             if ($this->weapon instanceof Wand) {
-                return $this->smart + $weapon->getDamage() + Config::$weaponBonus;
+                return $this->smart + $this->weapon->getDamage() + Config::$weaponBonus;
             }else {
-                return $this->strengh + $weapon->getDamage();
+                return $this->strengh + $this->weapon->getDamage();
             }
         }
 

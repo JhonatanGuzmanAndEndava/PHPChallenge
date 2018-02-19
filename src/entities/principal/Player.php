@@ -1,5 +1,7 @@
 <?php
 
+include_once("Actions.php");
+
     class Player implements Actions{
 
         private $id;
@@ -17,11 +19,11 @@
             //TODO: Look out with abs
             $scopeWeapon = $this->character->getWeapon()->getRange();
             $myPosition = $this->character->getPosition();
-            $hisPosition = $player->getPosition();
+            $hisPosition = $player->character->getPosition();
             $scopeWithEnemy = abs($myPosition - $hisPosition);
             if($scopeWithEnemy <= $scopeWeapon) {
                 $damage = $this->character->calculeDamage();
-                $player->getCharacter->setLifePoints($damage);
+                $player->getCharacter()->setLifePoints($damage);
             }else {
                 echo "Too far";
             }
@@ -41,7 +43,7 @@
         public function gettingCloser(Player $player) {
             //TODO: check what if I am too close
             $myPosition = $this->character->getPosition();
-            $hisPosition = $player->getPosition();
+            $hisPosition = $player->character->getPosition();
             if($hisPosition < 0) {
                 $this->character->setPosition($this->character->getPosition() - $this->character->getSpeed());
             }else {

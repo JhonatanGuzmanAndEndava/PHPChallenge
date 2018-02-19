@@ -1,5 +1,7 @@
 <?php
 
+include_once("Weapon.php");
+
     class Mallet extends Weapon{
         
         public function __construct() {

@@ -4,7 +4,7 @@
         private $shieldPoints;
         private $speedPenalty;
 
-        public function __construct($shieldPoints) {
+        public function __construct($shieldPoints, $speedPenalty) {
             $this->shieldPoints = $shieldPoints;
             $this->speedPenalty = $speedPenalty;
         }

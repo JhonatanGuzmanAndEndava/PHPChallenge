@@ -1,5 +1,7 @@
 <?php
 
+include_once("Armor.php");
+
     class ClothVest extends Armor{
         
         public function __construct() {

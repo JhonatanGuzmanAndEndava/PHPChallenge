@@ -1,5 +1,7 @@
 <?php
 
+include_once("Armor.php");
+
     class VestMail extends Armor{
         
         public function __construct() {

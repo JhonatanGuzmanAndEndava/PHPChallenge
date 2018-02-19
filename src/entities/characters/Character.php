@@ -1,5 +1,7 @@
 <?php
 
+include_once(dirname(__FILE__)."/../../config/game/Config.php");
+
     abstract class Character {
         
         protected $lifePoints;
@@ -28,7 +30,7 @@
          * Call after set weapon and armor
          */
         public function initialDuel() {
-            updateSpeed();
+            $this->updateSpeed();
         }
 
         public function selectWeapon(Weapon $weapon) {

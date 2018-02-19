@@ -1,5 +1,7 @@
 <?php
 
+include_once("Armor.php");
+
     class NoArmor extends Armor{
         
         public function __construct() {

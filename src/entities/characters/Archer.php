@@ -1,5 +1,7 @@
 <?php
 
+include_once("Character.php");
+
     class Archer extends Character {
 
         public function __construct($lifePoints = 100) {
@@ -12,11 +14,11 @@
         }
         
         public function calculeDamage() {
-            $totalDamage = $this->strengh + $weapon->getDamage();
+            $totalDamage = $this->strengh + $this->weapon->getDamage();
             if ($this->weapon instanceof Bow) {
                 return $totalDamage + Config::$weaponBonus;
             }elseif ($this->weapon instanceof Wand) {
-                return $this->smart + $weapon->getDamage();
+                return $this->smart + $this->weapon->getDamage();
             }else {
                 return $totalDamage;
             }

@@ -1,5 +1,7 @@
 <?php
 
+include_once("Weapon.php");
+
     class Bow extends Weapon{
         
         public function __construct() {

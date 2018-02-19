@@ -25,7 +25,7 @@ include_once("Actions.php");
                 $damage = $this->character->calculeDamage();
                 $player->getCharacter()->setLifePoints($damage);
             }else {
-                echo "Too far";
+                echo "Too far"."<br>";
             }
         }
 

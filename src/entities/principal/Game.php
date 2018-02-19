@@ -3,6 +3,8 @@
 include_once("Player.php");
 include_once(dirname(__FILE__)."/../characters/Archer.php");
 include_once(dirname(__FILE__)."/../characters/Wizard.php");
+include_once(dirname(__FILE__)."/../characters/Fighter.php");
+include_once(dirname(__FILE__)."/../weapons/Sword.php");
 include_once(dirname(__FILE__)."/../weapons/Bow.php");
 include_once(dirname(__FILE__)."/../weapons/Wand.php");
 include_once(dirname(__FILE__)."/../armors/Helmet.php");
@@ -31,11 +33,11 @@ include_once(dirname(__FILE__)."/../armors/ClothVest.php");
             $this->playerTwo = $this->setPlayer(2,"PLAYER2", 5000);
 
             //Set Character
-            $this->playerOne->setCharacter(new Archer());
+            $this->playerOne->setCharacter(new Fighter());
             $this->playerTwo->setCharacter(new Wizard());
                         
             //Set Weapon
-            $this->playerOne->getCharacter()->selectWeapon(new Bow());
+            $this->playerOne->getCharacter()->selectWeapon(new Sword());
             $this->playerTwo->getCharacter()->selectWeapon(new Wand());
 
             //Set armor
@@ -79,7 +81,7 @@ include_once(dirname(__FILE__)."/../armors/ClothVest.php");
                 }
 
                 if($cont > $this->numberOfRounds) {
-                    echo "Se acabaron las rondas";
+                    echo "Se acabaron las rondas"."<br>";
                     $this->printLog();
                     break;
                 }

@@ -8,6 +8,26 @@
             $this->damage = $damage;
             $this->range = $range;
         }
+ 
+        public function getDamage()
+        {
+            return $this->damage;
+        }
+
+        public function setDamage($damage)
+        {
+            $this->damage = $damage;
+        }
+
+        public function getRange()
+        {
+            return $this->range;
+        }
+
+        public function setRange($range)
+        {
+            $this->range = $range;
+        }
     }
 
 ?>

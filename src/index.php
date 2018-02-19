@@ -1,7 +1,9 @@
 <?php
 
     function main() {
-        echo "Hola mundo";
+        $game = new Game(10);
+        $game->initGame();
+        $game->play();
     }
 
     main();

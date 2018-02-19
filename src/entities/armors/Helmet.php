@@ -4,7 +4,8 @@
         
         public function __construct() {
             $shieldPoints = 5;
-            parent::__construct($shieldPoints);
+            $speedPenalty = 1;
+            parent::__construct($shieldPoints, $speedPenalty);
         }
 
     }

@@ -1,10 +1,10 @@
 <?php
 
-    class Shield extends Armor{
+    class NoArmor extends Armor{
         
         public function __construct() {
-            $shieldPoints = 20;
-            $speedPenalty = 4;
+            $shieldPoints = 0;
+            $speedPenalty = 0;
             parent::__construct($shieldPoints, $speedPenalty);
         }
 

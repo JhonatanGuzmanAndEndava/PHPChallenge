@@ -1,8 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-    phpinfo();
-=======
 require __DIR__.'\..\vendor\autoload.php';
 use Domain\Entities\Principal\Game as Game;
 
@@ -13,6 +10,5 @@ use Domain\Entities\Principal\Game as Game;
     }
 
     main();
->>>>>>> jhonatan/basics
 
 ?>

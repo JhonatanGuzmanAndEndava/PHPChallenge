@@ -1,6 +1,8 @@
 <?php
 
-include_once("Character.php");
+namespace Domain\Entities\Characters;
+
+use Domain\Entities\Characters\Character as Character;
 
     class Tank extends Character {
 

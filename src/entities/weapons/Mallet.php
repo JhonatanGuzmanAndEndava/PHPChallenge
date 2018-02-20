@@ -1,6 +1,8 @@
 <?php
 
-include_once("Weapon.php");
+namespace Domain\Entities\Weapons;
+
+use Domain\Entities\Weapons\Weapon as Weapon;
 
     class Mallet extends Weapon{
         

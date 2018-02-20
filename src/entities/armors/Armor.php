@@ -1,5 +1,7 @@
 <?php
 
+namespace Domain\Entities\Armors;
+
     abstract class Armor {
         private $shieldPoints;
         private $speedPenalty;

@@ -1,6 +1,10 @@
 <?php
 
-include_once(dirname(__FILE__)."/../../config/game/Config.php");
+namespace Domain\Entities\Characters;
+
+use Domain\Config\Game\Config as Config;
+use Domain\Entities\Weapons\Weapon as Weapon;
+use Domain\Entities\Armors\Armor as Armor;
 
     abstract class Character {
         

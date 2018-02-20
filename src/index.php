@@ -1,6 +1,7 @@
 <?php
 
-include_once("entities/principal/Game.php");
+require __DIR__.'\..\vendor\autoload.php';
+use Domain\Entities\Principal\Game as Game;
 
     function main() {
         $game = new Game(10);

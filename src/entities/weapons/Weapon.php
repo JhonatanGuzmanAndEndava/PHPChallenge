@@ -1,5 +1,7 @@
 <?php
 
+namespace Domain\Entities\Weapons;
+
     abstract class Weapon {
         private $damage;
         private $range;

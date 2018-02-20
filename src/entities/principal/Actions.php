@@ -1,5 +1,9 @@
 <?php 
 
+namespace Domain\Entities\Principal;
+
+use Domain\Entities\Principal\Player as Player;
+
     interface Actions {
         public function attack(Player $player);
         public function defend(Player $player);

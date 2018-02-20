@@ -1,6 +1,8 @@
 <?php
 
-include_once("Actions.php");
+namespace Domain\Entities\Principal;
+
+use Domain\Entities\Principal\Actions as Actions;
 
     class Player implements Actions{
 

@@ -1,6 +1,8 @@
 <?php
 
-include_once("Armor.php");
+namespace Domain\Entities\Armors;
+
+use Domain\Entities\Armors\Armor as Armor;
 
     class Shield extends Armor{
         

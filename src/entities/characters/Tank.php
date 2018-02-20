@@ -25,7 +25,7 @@ include_once("Character.php");
         }
 
         public function calculeDefend(Character $enemyChar) {
-            return $this->resistance + Config::$armorBonus;
+            return $this->resistance + $this->armor->getShieldPoints() + Config::$armorBonus;
         }
     }
 

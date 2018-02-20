@@ -45,12 +45,8 @@ include_once(dirname(__FILE__)."/../armors/ClothVest.php");
             $this->playerTwo->getCharacter()->useArmor(new ClothVest());
 
             //Configure position
-            $this->playerOne->getCharacter()->setPosition(-5);
-            $this->playerTwo->getCharacter()->setPosition(5);
-
-            //Configure initial duel
-            $this->playerOne->getCharacter()->initialDuel();
-            $this->playerTwo->getCharacter()->initialDuel();
+            $this->playerOne->getCharacter()->setPosition(-50);
+            $this->playerTwo->getCharacter()->setPosition(50);
 
         }
 
@@ -59,57 +55,48 @@ include_once(dirname(__FILE__)."/../armors/ClothVest.php");
          */
         public function play() {
 
+            $this->printInitialInfo();
+
             $cont = 0; 
             while(true) {
-
-                $this->printLog();
 
                 $this->playerOne->attack($this->playerTwo);
                 $this->playerOne->defend($this->playerTwo);
                 $this->playerOne->gettingCloser($this->playerTwo);
 
+                $this->printPositionPlayer($this->playerOne);
+                $this->printLifePlayer($this->playerTwo);
+
+                if($this->playerTwo->getCharacter()->getLifePoints() <= 0) {
+                    echo "Pierde jugador 2";
+                    break;
+                }
+
                 $this->playerTwo->attack($this->playerOne);
                 $this->playerTwo->defend($this->playerOne);
-                $this->playerTwo->gettingCloser($this->playerOne);
+                $this->playerTwo->walkAway($this->playerOne);
 
+                $this->printPositionPlayer($this->playerTwo);
+                $this->printLifePlayer($this->playerOne);
+                
                 if($this->playerOne->getCharacter()->getLifePoints() <= 0) {
                     echo "Pierde jugador 1";
-                    break;
-                }elseif($this->playerTwo->getCharacter()->getLifePoints() <= 0) {
-                    echo "Pierde jugador 2";
                     break;
                 }
 
                 if($cont > $this->numberOfRounds) {
                     echo "Se acabaron las rondas"."<br>";
-                    $this->printLog();
+                    $this->printLifePlayer($this->playerOne);
+                    $this->printLifePlayer($this->playerTwo);
+                    echo "empate"."<br>";
                     break;
                 }
                 ++$cont;
 
             }
-
-
-            /*
-            $this->playerOne->attack($this->playerTwo);
-            $this->playerOne->defend($this->playerTwo);
-            $this->playerOne->gettingCloser($this->playerTwo);
-
-            $this->playerTwo->attack($this->playerOne);
-            $this->playerTwo->defend($this->playerOne);
-            $this->playerTwo->gettingCloser($this->playerOne);
-
-            $this->playerOne->attack($this->playerTwo);
-            $this->playerOne->defend($this->playerTwo);
-            $this->playerOne->gettingCloser($this->playerTwo);
-
-            $this->playerTwo->attack($this->playerOne);
-            $this->playerTwo->defend($this->playerOne);
-            $this->playerTwo->gettingCloser($this->playerOne);
-            */
         }
 
-        private function printLog() {
+        private function printInitialInfo() {
             echo "Vida del jugador 1: ".$this->playerOne->getCharacter()->getLifePoints()."<br>";
             echo "Vida del jugador 2: ".$this->playerTwo->getCharacter()->getLifePoints()."<br>";
             echo "<br>";
@@ -121,6 +108,15 @@ include_once(dirname(__FILE__)."/../armors/ClothVest.php");
             echo "<br>";
             echo "jugador 1 está en : ".$this->playerOne->getCharacter()->getPosition()."<br>";
             echo "jugador 2 está en : ".$this->playerTwo->getCharacter()->getPosition()."<br>";
+            echo "<br>";
+        }
+
+        private function printPositionPlayer(Player $player) {
+            echo "Ahora jugador ".$player->getId()." está en : ".$player->getCharacter()->getPosition()."<br>";
+        }
+
+        private function printLifePlayer(Player $player) {
+            echo "Ahora jugador ".$player->getId()." tiene : ".$player->getCharacter()->getLifePoints()." de vida"."<br>";
         }
 
     }

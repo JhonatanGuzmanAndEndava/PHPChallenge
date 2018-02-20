@@ -22,26 +22,18 @@ include_once(dirname(__FILE__)."/../../config/game/Config.php");
         abstract public function calculeDamage();
         abstract public function calculeDefend(Character $enemyChar);
 
-        private function updateSpeed() {
-            $this->speed -= $this->armor->getSpeedPenalty();
-        }
-
-        /**
-         * Call after set weapon and armor
-         */
-        public function initialDuel() {
-            $this->updateSpeed();
-        }
-
         public function selectWeapon(Weapon $weapon) {
             $this->weapon = $weapon;
         }
         
         public function useArmor(Armor $armor) {
             $this->armor = $armor;
+            $this->speed -= $this->armor->getSpeedPenalty();
         } 
 
         public function takeOffArmor() {
+            //TODO: make sure you have an armor
+            $this->speed += $this->armor->getSpeedPenalty();
             $this->armor = new NoArmor();
         } 
 

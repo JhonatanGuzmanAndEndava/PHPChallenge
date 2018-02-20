@@ -23,9 +23,9 @@ include_once("Actions.php");
             $scopeWithEnemy = abs($myPosition - $hisPosition);
             if($scopeWithEnemy <= $scopeWeapon) {
                 $damage = $this->character->calculeDamage();
-                $player->getCharacter()->setLifePoints($damage);
+                $player->getCharacter()->setLifePoints($player->getCharacter()->getLifePoints() - $damage);
             }else {
-                echo "Too far"."<br>";
+                echo "Too far to atack for player ".$this->id."<br>";
             }
         }
 
@@ -44,20 +44,30 @@ include_once("Actions.php");
             //TODO: check what if I am too close
             $myPosition = $this->character->getPosition();
             $hisPosition = $player->character->getPosition();
-            if($hisPosition < 0) {
-                $this->character->setPosition($this->character->getPosition() - $this->character->getSpeed());
+            $distance = abs($myPosition - $hisPosition);
+            $mySteps = $this->character->getSpeed();
+            if($hisPosition < 0 && $myPosition > $hisPosition && $distance >= $mySteps ) {
+                $this->character->setPosition($this->character->getPosition() - $mySteps);
+            }elseif($hisPosition < 0 && $myPosition < $hisPosition && $distance >= $mySteps ) {
+                $this->character->setPosition($this->character->getPosition() + $mySteps);
+            }elseif ($hisPosition >= 0 && $myPosition < $hisPosition && $distance >= $mySteps){
+                $this->character->setPosition($this->character->getPosition() + $mySteps);
+            }elseif ($hisPosition >= 0 && $myPosition > $hisPosition && $distance >= $mySteps){
+                $this->character->setPosition($this->character->getPosition() - $mySteps);
             }else {
-                $this->character->setPosition($this->character->getPosition() + $this->character->getSpeed());
+                $this->character->setPosition($hisPosition);
             }
         }
 
         public function walkAway(Player $player) { 
             $myPosition = $this->character->getPosition();
-            $hisPosition = $player->getPosition();
-            if($hisPosition < 0) {
-                $this->character->setPosition($this->character->getPosition() + $this->character->getSpeed());
-            }else {
-                $this->character->setPosition($this->character->getPosition() - $this->character->getSpeed());
+            $hisPosition = $player->character->getPosition();
+            $distance = abs($myPosition - $hisPosition);
+            $mySteps = $this->character->getSpeed();
+            if($hisPosition <= $myPosition) {
+                $this->character->setPosition($this->character->getPosition() + $mySteps);
+            }elseif ($hisPosition > $myPosition){
+                $this->character->setPosition($this->character->getPosition() - $mySteps);
             }
         }
 

@@ -26,9 +26,9 @@ include_once("Character.php");
 
         public function calculeDefend(Character $enemyChar) {
             if ($enemyChar->getWeapon() instanceof Bow) {
-                return $this->resistance + Config::$armorBonus;
+                return $this->resistance + $this->armor->getShieldPoints() + Config::$armorBonus;
             }
-            return $this->resistance;
+            return $this->resistance + $this->armor->getShieldPoints();
         }
         
     }

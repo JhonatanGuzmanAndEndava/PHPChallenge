@@ -33,14 +33,18 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
         /**
          * TODO: A factory method design pattern
          */
-        private function setPlayer($id, $nickname, $money) {
-            return new Player($id, $nickname, $money);
+        private function setPlayerOne($id, $nickname, $money) {
+            $this->playerOne = new Player($id, $nickname, $money);
         }
 
-        public function initGame() {
+        private function setPlayerTwo($id, $nickname, $money) {
+            $this->playerTwo = new Player($id, $nickname, $money);
+        }
+
+        public function initGame_test() {
             //Set the players
-            $this->playerOne = $this->setPlayer(1,"PLAYER1", 5000);
-            $this->playerTwo = $this->setPlayer(2,"PLAYER2", 5000);
+            $this->setPlayerOne(1,"PLAYER1", 5000);
+            $this->setPlayerTwo(2,"PLAYER2", 5000);
 
             //Set Character
             $this->playerOne->setCharacter(new Fighter());
@@ -59,6 +63,10 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
             $this->playerTwo->getCharacter()->setPosition(50);
 
         }
+
+        public function initGame() {
+            
+        }   
 
         /**
          * TODO: Who start first?

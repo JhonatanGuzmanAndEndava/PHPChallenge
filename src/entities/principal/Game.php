@@ -22,14 +22,23 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
 
     class Game {
 
+        private $instance;
+
         private $numberOfRounds;
         private $playerOne;
         private $playerTwo;
 
-        public function __construct(int $numberOfRounds) {
+        private function __construct(int $numberOfRounds = 16) {
             $this->numberOfRounds = $numberOfRounds;
         }
-        
+
+        public static function getInstance() {
+            if (is_null(self::$instance)) {
+                return self::$instance = new Game();
+            }
+            return self::$instance;
+        }
+
         /**
          * TODO: A factory method design pattern
          */
@@ -98,7 +107,7 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
                 $this->printPositionPlayer($this->playerOne);
                 $this->printLifePlayer($this->playerTwo);
 
-                if($this->playerTwo->getCharacter()->getLifePoints() <= 0) {
+                if($this->playerTwoIsDead()) {
                     echo "Pierde jugador 2";
                     break;
                 }
@@ -110,7 +119,7 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
                 $this->printPositionPlayer($this->playerTwo);
                 $this->printLifePlayer($this->playerOne);
                 
-                if($this->playerOne->getCharacter()->getLifePoints() <= 0) {
+                if($this->playerOneIsDead()) {
                     echo "Pierde jugador 1";
                     break;
                 }
@@ -125,6 +134,34 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
                 ++$cont;
 
             }
+        }
+
+        public function playTurn(Player $player, Player $enemyPlayer, $action1, $action2) {
+            
+            if(strcmp($action1,$action2) == 0) {
+                echo "No se puede usar la misma accion 2 veces. Turno perdido";
+            }else {
+                $this->doAnAction($player, $enemyPlayer, $action1);
+                $this->doAnAction($player, $enemyPlayer, $action2);
+            }
+        }
+
+        private function doAnAction(Player $player, Player $enemyPlayer, $action) {
+            if(strcmp($action,"Atacar") == 0) {
+                $player->attack($enemyPlayer);
+            }elseif(strcmp($action,"Acercarse") == 0) {
+                $player->gettingCloser($enemyPlayer);
+            }elseif(strcmp($action,"Alejarse") == 0) {
+                $player->walkAway($enemyPlayer);
+            }
+        }
+
+        public function playerOneIsDead() {
+            return $this->playerOne->getCharacter()->getLifePoints() <= 0 ? true : false;
+        }
+
+        public function playerTwoIsDead() {
+            return $this->playerOne->getCharacter()->getLifePoints() <= 0 ? true : false;
         }
 
         private function printInitialInfo() {

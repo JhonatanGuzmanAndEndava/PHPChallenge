@@ -33,12 +33,20 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
         /**
          * TODO: A factory method design pattern
          */
-        private function setPlayerOne($id, $nickname, $money) {
+        public function setPlayerOne($id, $nickname, $money) {
             $this->playerOne = new Player($id, $nickname, $money);
         }
 
-        private function setPlayerTwo($id, $nickname, $money) {
+        public function setPlayerTwo($id, $nickname, $money) {
             $this->playerTwo = new Player($id, $nickname, $money);
+        }
+
+        public function getPlayerOne() {
+            return $this->playerOne;
+        }
+
+        public function getPlayerTwo() {
+            return $this->playerTwo;
         }
 
         public function initGame_test() {
@@ -59,9 +67,14 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
             $this->playerTwo->getCharacter()->useArmor(new ClothVest());
 
             //Configure position
-            $this->playerOne->getCharacter()->setPosition(-50);
-            $this->playerTwo->getCharacter()->setPosition(50);
+            $this->playerOne->getCharacter()->setPosition(-5);
+            $this->playerTwo->getCharacter()->setPosition(5);
 
+        }
+
+        public function setPlayerPositions($pos1 = -5, $pos2 = 5) {
+            $this->playerOne->getCharacter()->setPosition($pos1);
+            $this->playerTwo->getCharacter()->setPosition($pos2);
         }
 
         public function initGame() {
@@ -115,6 +128,7 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
         }
 
         private function printInitialInfo() {
+
             echo "Vida del jugador 1: ".$this->playerOne->getCharacter()->getLifePoints()."<br>";
             echo "Vida del jugador 2: ".$this->playerTwo->getCharacter()->getLifePoints()."<br>";
             echo "<br>";

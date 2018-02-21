@@ -3,6 +3,12 @@
 namespace Domain\Entities\Characters;
 
 use Domain\Entities\Characters\Character as Character;
+use Domain\Config\Game\Config as Config;
+use Domain\Entities\Weapons\Sword as Sword;
+use Domain\Entities\Weapons\Wand as Wand;
+use Domain\Entities\Weapons\Mallet as Mallet;
+use Domain\Entities\Weapons\Axe as Axe;
+use Domain\Entities\Weapons\Bow as Bow;
 
     class Tank extends Character {
 

@@ -31,8 +31,14 @@ use Domain\Entities\Armors\Armor as Armor;
         }
         
         public function useArmor(Armor $armor) {
-            $this->armor = $armor;
-            $this->speed -= $this->armor->getSpeedPenalty();
+            if(is_null($this->armor)) {
+                $this->armor = $armor;
+                $this->speed -= $this->armor->getSpeedPenalty();
+            }else {
+                $this->speed += $this->armor->getSpeedPenalty();
+                $this->armor = $armor;
+                $this->speed -= $this->armor->getSpeedPenalty();
+            }
         } 
 
         public function takeOffArmor() {

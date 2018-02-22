@@ -18,7 +18,6 @@ use Domain\Entities\Principal\Actions as Actions;
         }
 
         public function attack(Player $player) {
-            //TODO: Look out with abs
             $scopeWeapon = $this->character->getWeapon()->getRange();
             $myPosition = $this->character->getPosition();
             $hisPosition = $player->character->getPosition();
@@ -43,7 +42,6 @@ use Domain\Entities\Principal\Actions as Actions;
         }
 
         public function gettingCloser(Player $player) {
-            //TODO: check what if I am too close
             $myPosition = $this->character->getPosition();
             $hisPosition = $player->character->getPosition();
             $distance = abs($myPosition - $hisPosition);
@@ -112,21 +110,6 @@ use Domain\Entities\Principal\Actions as Actions;
         {
             $this->character = $character;
         }
-
-        /*
-        public function __get($property) {
-            if (property_exists($this, $property)) {
-                return $this->$property;
-            }
-        }
-        
-        public function __set($property, $value) {
-            if (property_exists($this, $property)) {
-                $this->$property = $value;
-            }
-        }
-        */
-        
     }
 
 ?>

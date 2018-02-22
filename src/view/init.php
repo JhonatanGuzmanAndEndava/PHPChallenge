@@ -22,24 +22,11 @@
         use Domain\Entities\Principal\Game as Game;
         use Domain\Entities\Principal\Player as Player;
 
-        use Domain\Entities\Characters\Archer as Archer;
-        use Domain\Entities\Characters\Fighter as Fighter;
-        use Domain\Entities\Characters\Tank as Tank;
-        use Domain\Entities\Characters\Wizard as Wizard;
-
-        use Domain\Entities\Weapons\Axe as Axe;
-        use Domain\Entities\Weapons\Bow as Bow;
-        use Domain\Entities\Weapons\Mallet as Mallet;
-        use Domain\Entities\Weapons\Sword as Sword;
-        use Domain\Entities\Weapons\Wand as Wand;
-
-        use Domain\Entities\Armors\Helmet as Helmet;
-        use Domain\Entities\Armors\NoArmor as NoArmor;
-        use Domain\Entities\Armors\Shield as Shield;
-        use Domain\Entities\Armors\VestMail as VestMail;
-        use Domain\Entities\Armors\ClothVest as ClothVest;
+        use Domain\Entities\Principal\CharacterFactory as CharacterFactory; 
 
         if(isset($_POST['nicknamep1'])) {
+
+            session_start();
 
             $nicknamep1 = $_POST['nicknamep1'];
             $characterp1 = $_POST['characterp1'];
@@ -54,81 +41,14 @@
             $game->setPlayerOne(1,$nicknamep1,5000);
             $game->setPlayerTwo(2,$nicknamep2,5000);
 
-            //Character
-            if(strcmp($characterp1, "Arquero") == 0) {
-                $game->getPlayerOne()->setCharacter(new Archer());
-            }elseif(strcmp($characterp1, "Luchador") == 0) {
-                $game->getPlayerOne()->setCharacter(new Fighter());
-            }elseif(strcmp($characterp1, "Mago") == 0) {
-                $game->getPlayerOne()->setCharacter(new Wizard());
-            }elseif(strcmp($characterp1, "Tanque") == 0) {
-                $game->getPlayerOne()->setCharacter(new Tank());
-            }
-
-            if(strcmp($characterp2, "Arquero") == 0) {
-                $game->getPlayerTwo()->setCharacter(new Archer());
-            }elseif(strcmp($characterp2, "Luchador") == 0) {
-                $game->getPlayerTwo()->setCharacter(new Fighter());
-            }elseif(strcmp($characterp2, "Mago") == 0) {
-                $game->getPlayerTwo()->setCharacter(new Wizard());
-            }elseif(strcmp($characterp2, "Tanque") == 0) {
-                $game->getPlayerTwo()->setCharacter(new Tank());
-            }
-
-            //Weapon
-            if(strcmp($weaponp1, "Arco") == 0) {
-                $game->getPlayerOne()->getCharacter()->selectWeapon(new Bow());
-            }elseif(strcmp($weaponp1, "Hacha") == 0) {
-                $game->getPlayerOne()->getCharacter()->selectWeapon(new Axe());
-            }elseif(strcmp($weaponp1, "Espada") == 0) {
-                $game->getPlayerOne()->getCharacter()->selectWeapon(new Sword());
-            }elseif(strcmp($weaponp1, "Mazo") == 0) {
-                $game->getPlayerOne()->getCharacter()->selectWeapon(new Mallet());
-            }elseif(strcmp($weaponp1, "Varita") == 0) {
-                $game->getPlayerOne()->getCharacter()->selectWeapon(new Wand());
-            }
-
-            if(strcmp($weaponp2, "Arco") == 0) {
-                $game->getPlayerTwo()->getCharacter()->selectWeapon(new Bow());
-            }elseif(strcmp($weaponp2, "Hacha") == 0) {
-                $game->getPlayerTwo()->getCharacter()->selectWeapon(new Axe());
-            }elseif(strcmp($weaponp2, "Espada") == 0) {
-                $game->getPlayerTwo()->getCharacter()->selectWeapon(new Sword());
-            }elseif(strcmp($weaponp2, "Mazo") == 0) {
-                $game->getPlayerTwo()->getCharacter()->selectWeapon(new Mallet());
-            }elseif(strcmp($weaponp2, "Varita") == 0) {
-                $game->getPlayerTwo()->getCharacter()->selectWeapon(new Wand());
-            }
-
-            //Armor
-            if(strcmp($armorp1, "Armadura de tela") == 0) {
-                $game->getPlayerOne()->getCharacter()->useArmor(new ClothVest());
-            }elseif(strcmp($armorp1, "Armadura de malla") == 0) {
-                $game->getPlayerOne()->getCharacter()->useArmor(new VestMail());
-            }elseif(strcmp($armorp1, "Casco") == 0) {
-                $game->getPlayerOne()->getCharacter()->useArmor(new Helmet());
-            }elseif(strcmp($armorp1, "Escudo") == 0) {
-                $game->getPlayerOne()->getCharacter()->useArmor(new Shield());
-            }elseif(strcmp($armorp1, "Sin armadura") == 0) {
-                $game->getPlayerOne()->getCharacter()->useArmor(new NoArmor());
-            }
-
-            if(strcmp($armorp2, "Armadura de tela") == 0) {
-                $game->getPlayerTwo()->getCharacter()->useArmor(new ClothVest());
-            }elseif(strcmp($armorp2, "Armadura de malla") == 0) {
-                $game->getPlayerTwo()->getCharacter()->useArmor(new VestMail());
-            }elseif(strcmp($armorp2, "Casco") == 0) {
-                $game->getPlayerTwo()->getCharacter()->useArmor(new Helmet());
-            }elseif(strcmp($armorp2, "Escudo") == 0) {
-                $game->getPlayerTwo()->getCharacter()->useArmor(new Shield());
-            }elseif(strcmp($armorp2, "Sin armadura") == 0) {
-                $game->getPlayerTwo()->getCharacter()->useArmor(new NoArmor());
-            }
+            $game->getPlayerOne()->setCharacter(CharacterFactory::createCharacter($characterp1, $weaponp1, $armorp1));
+            $game->getPlayerTwo()->setCharacter(CharacterFactory::createCharacter($characterp2, $weaponp2, $armorp2));
 
             $game->setPlayerPositions();
-            session_start();
+
             $_SESSION['game'] = $game;
             $_SESSION['counter'] = 1;
+
         }else{ 
             session_start();
         }
@@ -144,7 +64,7 @@
             <?php
 
                 session_start();
-                //TODO: Play by turns
+
                 if(isset($_POST['action1']) || isset($_POST['action2'])) {
                     $action1 = $_POST['action1'];
                     $action2 = $_POST['action2'];
@@ -212,23 +132,7 @@
 
                     echo "Jugadores a: ".$_SESSION['game']->getDistanceBetweenBoth()." pasos de distancia"."<br><br>";
 
-                    echo "<h4>Jugador 1</h4>"."<br>";
-                    echo "Nombre: ".$player1->getNickname()."<br>";
-                    echo "Puntos de vida restantes: ".$player1->getCharacter()->getLifePoints()."<br>";
-                    echo "Ataque: ".$player1->getCharacter()->calculeDamage()."<br>";
-                    echo "Alcance del arma: ".$player1->getCharacter()->getWeapon()->getRange()."<br>";
-                    echo "Defensa: ".$player1->getCharacter()->calculeDefend($player2->getCharacter())."<br>";
-                    echo "Posicion: ".$player1->getCharacter()->getPosition()."<br>";
-                    echo "Velocidad: ".$player1->getCharacter()->getSpeed()."<br><br>";
-                
-                    echo "<h4>Jugador 2</h4>"."<br>";
-                    echo "Nombre: ".$player2->getNickname()."<br>";
-                    echo "Puntos de vida restantes: ".$player2->getCharacter()->getLifePoints()."<br>";
-                    echo "Ataque: ".$player2->getCharacter()->calculeDamage()."<br>";
-                    echo "Alcance del arma: ".$player2->getCharacter()->getWeapon()->getRange()."<br>";
-                    echo "Defensa: ".$player2->getCharacter()->calculeDefend($player1->getCharacter())."<br>";
-                    echo "Posicion: ".$player2->getCharacter()->getPosition()."<br>";
-                    echo "Velocidad: ".$player2->getCharacter()->getSpeed()."<br><br>";
+                    $_SESSION['game']->printPlayersInfo();
                 }
                 
             ?>

@@ -21,9 +21,6 @@ use Domain\Entities\Armors\VestMail as VestMail;
 use Domain\Entities\Armors\ClothVest as ClothVest;
 
     class Game {
-
-        private $instance;
-
         private $numberOfRounds;
         private $playerOne;
         private $playerTwo;
@@ -33,11 +30,13 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
         }
 
         public static function getInstance() {
-            if (is_null(self::$instance)) {
-                return self::$instance = new Game();
+            static $instance = null;
+            
+            if (null === $instance) {
+               $instance = new static();
             }
-            return self::$instance;
-        }
+            return $instance;
+         }
 
         /**
          * TODO: A factory method design pattern
@@ -149,19 +148,52 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
         private function doAnAction(Player $player, Player $enemyPlayer, $action) {
             if(strcmp($action,"Atacar") == 0) {
                 $player->attack($enemyPlayer);
+                $enemyPlayer->defend($player);
+                $this->printAttackLog($player, $enemyPlayer, $this->canAttack($player, $enemyPlayer));
             }elseif(strcmp($action,"Acercarse") == 0) {
                 $player->gettingCloser($enemyPlayer);
+                $this->printWalkLog($player);
             }elseif(strcmp($action,"Alejarse") == 0) {
                 $player->walkAway($enemyPlayer);
+                $this->printWalkLog($player);
             }
         }
 
-        public function playerOneIsDead() {
+        public function getDistanceBetweenBoth() {
+            return abs($this->playerOne->getCharacter()->getPosition()-$this->playerTwo->getCharacter()->getPosition());
+        }
+
+        public function canAttack(Player $player, Player $enemyPlayer) {
+            $scopeWeapon = $player->getCharacter()->getWeapon()->getRange();
+            $myPosition = $player->getCharacter()->getPosition();
+            $hisPosition = $enemyPlayer->getCharacter()->getPosition();
+            $scopeWithEnemy = abs($myPosition - $hisPosition);
+            return $scopeWithEnemy <= $scopeWeapon ? true : false; 
+        }
+
+        public function isPlayerOneDead() {
             return $this->playerOne->getCharacter()->getLifePoints() <= 0 ? true : false;
         }
 
-        public function playerTwoIsDead() {
+        public function isPlayerTwoDead() {
             return $this->playerOne->getCharacter()->getLifePoints() <= 0 ? true : false;
+        }
+
+        public function printAttackLog(Player $player, Player $enemyPlayer, $canAttack) {
+            if($canAttack) {
+                $damage = $player->getCharacter()->calculeDamage();
+                $defend = $enemyPlayer->getCharacter()->calculeDefend($player->getCharacter());
+                echo "Jugador ".$player->getId()." (".$player->getNickname().")"." causa ".$damage."<br>";
+                echo "Jugador ".$enemyPlayer->getId()." (".$enemyPlayer->getNickname().")"." se defiende ".$defend."<br>";
+                echo "Daño total: ".var_dump($damage - $defend)."<br>";
+            }else {
+                echo "Demasiado lejos para atacar"."<br>";
+            }
+        }
+
+        public function printWalkLog(Player $player) {
+            echo "Jugador ".$player->getId()." (".$player->getNickname().")"." camina ".$player->getCharacter()->getSpeed()." pasos<br>";
+            echo "Nueva posicion: ". $player->getCharacter()->getPosition()."<br>";
         }
 
         private function printInitialInfo() {

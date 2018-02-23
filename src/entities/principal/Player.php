@@ -25,8 +25,10 @@ use Domain\Entities\Principal\Actions as Actions;
             if($scopeWithEnemy <= $scopeWeapon) {
                 $damage = $this->character->calculeDamage();
                 $player->getCharacter()->setLifePoints($player->getCharacter()->getLifePoints() - $damage);
+                return true;
             }else {
                 echo "Too far to atack for player ".$this->id."<br>";
+                return false;
             }
         }
 

@@ -71,8 +71,9 @@ use Domain\Entities\Armors\ClothVest as ClothVest;
 
         private function doAnAction(Player $player, Player $enemyPlayer, $action) {
             if(strcmp($action,"Atacar") == 0) {
-                $player->attack($enemyPlayer);
-                $enemyPlayer->defend($player);
+                if($player->attack($enemyPlayer)) { 
+                    $enemyPlayer->defend($player);
+                }
                 $this->printAttackLog($player, $enemyPlayer, $this->canAttack($player, $enemyPlayer));
             }elseif(strcmp($action,"Acercarse") == 0) {
                 $player->gettingCloser($enemyPlayer);

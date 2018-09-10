@@ -17,7 +17,7 @@
 <body>
 
     <?php
-        require __DIR__.'\..\..\vendor\autoload.php';
+        require __DIR__.'/../../vendor/autoload.php';
 
         use Domain\Entities\Principal\Game as Game;
         use Domain\Entities\Principal\Player as Player;

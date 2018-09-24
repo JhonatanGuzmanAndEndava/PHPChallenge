@@ -27,7 +27,7 @@
 
         use Domain\Entities\Principal\CharacterFactory as CharacterFactory; 
 
-        if(isset($_POST['nicknamep1'])) 
+        if(isset($_POST['nicknamep1'])) {
 
             $nicknamep1 = $_POST['nicknamep1'];
             $characterp1 = $_POST['characterp1'];

@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!doctype html>
 <html lang="es">
 
@@ -24,9 +27,7 @@
 
         use Domain\Entities\Principal\CharacterFactory as CharacterFactory; 
 
-        if(isset($_POST['nicknamep1'])) {
-
-            session_start();
+        if(isset($_POST['nicknamep1'])) 
 
             $nicknamep1 = $_POST['nicknamep1'];
             $characterp1 = $_POST['characterp1'];
@@ -49,8 +50,6 @@
             $_SESSION['game'] = $game;
             $_SESSION['counter'] = 1;
 
-        }else{ 
-            session_start();
         }
     ?>
 
@@ -62,8 +61,6 @@
             <h3>Progreso de la batalla</h3>
             <br>
             <?php
-
-                session_start();
 
                 if(isset($_POST['action1']) || isset($_POST['action2'])) {
                     $action1 = $_POST['action1'];
@@ -123,9 +120,6 @@
             <h2>Informacion</h2>
             <br>
             <?php   
-                
-                session_start();
-
                 if(isset($_SESSION['game'])) {
                     $player1 = $_SESSION['game']->getPlayerOne();
                     $player2 = $_SESSION['game']->getPlayerTwo();
